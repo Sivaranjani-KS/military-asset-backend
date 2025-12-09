@@ -8,9 +8,13 @@ app.use(cors());
 
 // DB Connection
 mongoose
-  .connect("mongodb://127.0.0.1:27017/mams_system")
-  .then(() => console.log("MongoDB Connected"))
-  .catch((err) => console.log(err));
+  .connect(process.env.MONGO_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log("MongoDB Atlas Connected"))
+  .catch((err) => console.log("MongoDB Connection Error:", err));
+
 
 // Asset Schema
 const AssetSchema = new mongoose.Schema({
@@ -57,5 +61,6 @@ app.delete("/api/assets/:id", async (req, res) => {
 
 // Server
 app.listen(process.env.PORT || 5000);
+
 
 
